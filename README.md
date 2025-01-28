@@ -46,12 +46,12 @@ Generate videos directly from the command line: `python cli.py "Your topic here"
 If you use this project in your work, please cite:
 
 ```
-@misc{3brown1blue,
+@misc{AIManimVideoGenerator,
 author = {Shah, Krish and Abey, Chris and Mujral, Hargun},
-title = {3Brown1Blue: AI-Generated Educational Videos},
+title = {3Brown1Blue: AI-Generated Educational Videos with Manim},
 year = {2024},
 publisher = {GitHub},
-url = {https://github.com/christopherabey/3brown1blue}
+url = {https://github.com/KrishKrosh/manim-video-gen}
 }
 ```
 
