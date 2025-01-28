@@ -2,7 +2,6 @@ fastapi
 uvicorn
 asyncio
 python-dotenv
-hume[stream]
 manim
 moviepy
 openai

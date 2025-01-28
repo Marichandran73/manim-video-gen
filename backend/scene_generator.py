@@ -262,6 +262,10 @@ class VideoScene(Scene):
         
         browser.add(outline, address_bar, address_text, network_panel, origin_header_example, allow_origin_header_example)
         return browser
+
+
+
+REMEMBER: ALWAYS OUTPUT THE FULL MANIM CODE PYTHON FILE, NO OTHER TEXT OR MARKDOWN, EVEN WHEN YOU ARE CORRECTING ERRONEOUS MANIM CODE
 """
 
 VOICE_ID = "7d21119e-bb5d-4416-8164-9170ec4952c2"
@@ -360,8 +364,13 @@ class SceneGenerator:
             # get output from last message
             output = response.choices[0].message.content
 
-            # strip code block markdown
+            # first strip whitespace
+            output = output.strip()
+            output = output.strip("python")
+            output = output.strip()
             output = output.strip("```")
+            output = output.strip()
+            output = output.strip("python")
 
             logger.info(f"Generated code: {output}")
 
@@ -389,6 +398,7 @@ class SceneGenerator:
             
             # scene was not rendered successfully
             # add error message to messages
+            logger.warn(f"Scene {scene_id} was not rendered successfully on iteration {iteration}")
             messages.append({"role": "user", "content": f"Error: {render_output[1]}"})
             iteration += 1
             

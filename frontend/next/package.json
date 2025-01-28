@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@humeai/voice": "^0.1.8",
-    "@humeai/voice-react": "^0.1.8",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-progress": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",

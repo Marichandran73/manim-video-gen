@@ -26,9 +26,9 @@ class TranscriptGenerator:
         self.scene_transcriptions = list(json.loads(transcriptions_split_right))
         return
 
-    def generate_emotion_system_prompt(self, emotions):
+    def generate_system_prompt(self):
         return f"""
-You are an expert teacher, similar to 3 Blue 1 Brown. Given a user's question about a topic, you are to generate a transcript for a video that will explain the topic. Really prioritize giving a fundamental understanding of the concept rather than a high level overview. And give it as if you are a fond teacher with an empathetic tone. They way you deliver this knowledge directly impacts how our kids will grow up to be. Right now, the student is feeling {emotions} so make sure to consider that in your explanation.
+You are an expert teacher, similar to 3 Blue 1 Brown. Given a user's question about a topic, you are to generate a transcript for a video that will explain the topic. Really prioritize giving a fundamental understanding of the concept rather than a high level overview. And give it as if you are a fond teacher with an empathetic tone. They way you deliver this knowledge directly impacts how our kids will grow up to be. 
 
 Animations will be generated for your content as well, so feel free to reference "the screen" and talk as if there is something relevant to what you are saying on the screen.
 
@@ -45,14 +45,14 @@ Format example:
 ]
 """
 
-    async def generate_transcript(self, user_topic, emotions):
+    async def generate_transcript(self, user_topic):
         """
         Generates the transcript for the user topic
         :return: List of scene transcriptions (strings)
         """
         iteration = 0
         messages = [{
-            "role": "system", "content": self.generate_emotion_system_prompt(emotions)
+            "role": "system", "content": self.generate_system_prompt()
         }, {
             "role": "user", "content": user_topic
         }]

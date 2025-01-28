@@ -1,74 +1,22 @@
 "use client";
 
 import React, { useState, useRef, RefObject, useEffect, useMemo } from "react";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import VideoStream from "@/components/videostream"; // Adjust the path as per your file structure
-import { Progress } from "./ui/progress";
 import { LoadingSpinner } from "./ui/LoadingSpinner";
-import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { ChevronDown, PlayIcon, SendIcon } from "lucide-react";
-import { Chat } from "./Chat";
-import { useVoice } from "@humeai/voice-react";
 
-interface Message {
-  avatarSrc: string;
-  avatarFallback: string;
-  author: string;
-  text: string;
-  side: "user" | "receiver";
-}
+  
 
-export function ClientComponent({ accessToken }: { accessToken: string }) {
+export function ClientComponent() {
   const textareaRef: RefObject<HTMLInputElement> = useRef(null);
   const [videoID, setVideoID] = useState<string>("");
-  const [emotions, setEmotions] = useState<string>(""); // string of comma-separated emotions
   const [videoPlaying, setVideoPlaying] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [starting, setStarting] = useState<boolean>(true);
   const [showGame, setShowGame] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [isSocketOpen, setIsSocketOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    // Open WebSocket connection
-    console.log("Opening WebSocket connection...");
-    const ws = new WebSocket("ws://localhost:8000/ws");
-
-    ws.onopen = () => {
-      setIsSocketOpen(true);
-      setSocket(ws);
-    };
-
-    ws.onmessage = (event) => {
-      const result = JSON.parse(event.data);
-
-      if (result?.face?.predictions) {
-        setEmotions(
-          result.face.predictions[0]?.emotions
-            ?.sort((a: any, b: any) => b.score - a.score)
-            .slice(0, 3)
-            .map((emotion: any) => emotion.name)
-            .join(", ")
-        );
-      }
-    };
-
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-
-    ws.onclose = () => {
-      console.log("WebSocket connection closed");
-      setIsSocketOpen(false);
-    };
-
-    return () => {
-      ws.close();
-    };
-  }, []);
 
   function generateVideo() {
     setStarting(false);
@@ -97,7 +45,7 @@ export function ClientComponent({ accessToken }: { accessToken: string }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text: messageText, emotions: emotions }),
+        body: JSON.stringify({ text: messageText}),
       })
         .then((response) => {
           if (!response.ok) {
@@ -144,15 +92,6 @@ export function ClientComponent({ accessToken }: { accessToken: string }) {
           </h3>
         </div>
         <div className="w-full flex justify-center align-middle items-center flex-col">
-          <div className="w-full flex flex-row max-h-full overflow-scroll">
-            <Chat accessToken={accessToken} />
-            <VideoStream
-              socket={socket}
-              emotions={emotions}
-              isSocketOpen={isSocketOpen}
-            />
-          </div>
-
           <Button
             onClick={() => setShowGame((prev) => !prev)}
             variant="outline"

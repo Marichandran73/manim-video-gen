@@ -17,7 +17,19 @@ elif llm_client_choice == "anthropic":
     client = AsyncAnthropicClient(
         api_key=os.getenv("ANTHROPIC_API_KEY"),
     )
+
+elif llm_client_choice == "gemini":
     
-else:
+    from openai import AsyncOpenAI
+    client = AsyncOpenAI(api_key=os.getenv("GEMINI_API_KEY"),
+                             base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+)
+    
+elif llm_client_choice == "openai":
     from openai import AsyncOpenAI
     client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+else:
+    print("No LLM client chosen, using DeepSeek")
+    from openai import AsyncOpenAI
+    client = AsyncOpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com/v1")
