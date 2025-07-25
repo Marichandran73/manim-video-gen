@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { ChevronDown, PlayIcon, SendIcon } from "lucide-react";
 
-  
+  //Main funtions
 
 export function ClientComponent() {
   const textareaRef: RefObject<HTMLInputElement> = useRef(null);
